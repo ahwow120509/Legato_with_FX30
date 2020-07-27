@@ -1,0 +1,25 @@
+load: manual
+
+sources:
+{
+    can_iot.c
+}
+
+params:
+{
+   interrupt_gpio = "79" // CF3_GPIO42
+}
+
+requires:
+{
+    kernelModules:
+    {
+#if ${MANGOH_WP_CHIPSET_9X15} = 1
+        $CURDIR/../can_9x15/mcp251x
+#elif ${MANGOH_WP_CHIPSET_9X07} = 1
+        #if ${MANGOH_BOARD} = red
+             $LEGATO_ROOT/drivers/can_9x07/mcp251x.mdef
+        #endif
+#endif  // MANGOH_WP_CHIPSET_?
+    }
+}
